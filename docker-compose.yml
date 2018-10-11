@@ -1,0 +1,17 @@
+version: '3'
+services:
+  db_sample_app:
+    image: postgres
+    volumes:
+      - ./tmp/db:/var/lib/postgresql/data
+    ports:
+      - "5438:5438"
+  web_sample_app:
+    build: .
+    command: bundle exec rails s -p 3020 -b '0.0.0.0'
+    volumes:
+      - .:/myapp
+    ports:
+      - "3020:3020"
+    depends_on:
+      - db_sample_app
